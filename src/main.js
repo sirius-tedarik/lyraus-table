@@ -1,8 +1,15 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
 
-Vue.config.productionTip = false
+import LyrausTable from "./LyrausTable.vue";
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+import "./assets/index.css";
+
+const Components = {
+  LyrausTable,
+};
+
+Object.keys(Components).forEach((name) => {
+  Vue.component(name, Components[name]);
+});
+
+export default Components;
