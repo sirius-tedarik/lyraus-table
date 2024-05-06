@@ -6,10 +6,17 @@
 npm install lyraus-ui
 ```
 
-## Dependencies
+## Usage:
 
 ```
-Tailwind
+import LyrausTable from "lyraus-ui"
+```
+
+```
+<LyrausTable
+    :data="List"
+    :columns="columns"
+/>
 ```
 
 ## Overview
