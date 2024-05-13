@@ -310,6 +310,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    indexColumn: {
+      type: Boolean,
+      default: false,
+    },
     useCheckAllBox: {
       type: Boolean,
       default: false,
@@ -413,7 +417,7 @@ export default {
       allSelected: false,
       selectedList: [],
       searchValue: "",
-      columnsList: [{ key: "index", label: "#", width: 60 }],
+      columnsList: [],
       selectedBatchOp: "",
     };
   },
@@ -491,6 +495,10 @@ export default {
     },
   },
   created() {
+    if (this.indexColumn) {
+      const indexColumn = { key: "index", label: "#", width: 60 };
+      this.columnsList = [indexColumn, ...this.columnsList];
+    }
     if (this.innerTable.length > 0) {
       const innerTable = {
         key: "description",
