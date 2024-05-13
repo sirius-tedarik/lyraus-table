@@ -94,7 +94,10 @@
               <td
                 v-if="row !== 'desc'"
                 v-for="(column, colIndex) in columnsList"
-                @click="selectRow(row, rowIndex)"
+                @click="
+                  !noneDataColumnKeys.includes(column.key) &&
+                    selectRow(row, rowIndex)
+                "
                 :key="colIndex"
                 :class="[
                   tdClass,
@@ -420,6 +423,12 @@ export default {
       searchValue: "",
       columnsList: [],
       selectedBatchOp: "",
+      noneDataColumnKeys: [
+        "index",
+        "selectableColumn",
+        "dropdownColumn",
+        "buttonsColumn",
+      ],
     };
   },
   methods: {
