@@ -94,6 +94,7 @@
               <td
                 v-if="row !== 'desc'"
                 v-for="(column, colIndex) in columnsList"
+                @click="selectRow(row, rowIndex)"
                 :key="colIndex"
                 :class="[
                   tdClass,
@@ -428,6 +429,9 @@ export default {
       } else {
         this.selectedList = [];
       }
+    },
+    selectRow(row, index) {
+      this.$emit("row-click", row, index);
     },
     toggleSelection(id) {
       const index = this.selectedList.indexOf(id);
