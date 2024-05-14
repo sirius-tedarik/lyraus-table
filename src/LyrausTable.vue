@@ -150,7 +150,12 @@
                   class="flex items-center justify-center my-2 border-r"
                 >
                   <button @click="toggleDescription(rowIndex)">
-                    <i class="fas fa-chevron-down text-gray-500"></i>
+                    <i
+                      :class="`flex transition-transform duration-500 ${
+                        activeDescriptionIndex ? 'rotate-[-180deg]' : ''
+                      }`"
+                      class="fas fa-chevron-down text-gray-500"
+                    ></i>
                   </button>
                 </div>
                 <!-- DESCRIPTION COLUMN -->
