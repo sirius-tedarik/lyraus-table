@@ -109,8 +109,8 @@ export default {
   },
   methods: {
     changePage(page) {
-      this.updatePage();
       this.currentPage = page;
+      this.updatePage();
     },
     goBack() {
       if (this.currentPage > 1) {
