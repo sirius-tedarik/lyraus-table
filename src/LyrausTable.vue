@@ -165,7 +165,7 @@
                 <!-- DROPDOWN COLUMN -->
                 <div
                   v-else-if="
-                    column.key.includes('dropdownColumn') && dropdownColumn
+                    column.key.includes('dropdownColumn') && dropdownColumns
                   "
                   class="flex items-center px-3 my-2 border-r"
                 >
@@ -290,8 +290,7 @@
       v-if="totalCount > 0"
       :totalRowCount="totalCount"
       :pageCount="pageCount"
-      :currentPage="currentPage + 1"
-      @changePage="(r) => (currentPage = r - 1)"
+      @change-page="(r) => (currentPage = r - 1)"
       :buttonColor="paginationButtonColor"
       :hoverColor="paginationHoverColor"
       :textColor="paginationTextColor"
@@ -373,9 +372,9 @@ export default {
       type: Object,
       default: () => {},
     },
-    dropdownColumn: {
-      type: Object,
-      default: () => {},
+    dropdownColumns: {
+      type: Array,
+      default: () => [],
     },
     paginationButtonColor: {
       type: String,
@@ -443,7 +442,6 @@ export default {
         "index",
         "description",
         "selectableColumn",
-        "dropdownColumn",
         "buttonsColumn",
       ],
       currentPage: 0,
@@ -545,8 +543,8 @@ export default {
       };
       this.columnsList = [selectableColumn, ...this.columnsList];
     }
-    if (this.dropdownColumn) {
-      this.dropdownColumn.forEach((item) => {
+    if (this.dropdownColumns) {
+      this.dropdownColumns.forEach((item) => {
         const dropdownColumn = {
           ...item,
           key: `dropdownColumn${item.key}`,

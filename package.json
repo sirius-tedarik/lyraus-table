@@ -1,6 +1,6 @@
 {
   "name": "lyraus-ui",
-  "version": "0.1.38b",
+  "version": "0.1.39b",
   "private": false,
   "main": "./dist/lyraus-ui.common.js",
   "scripts": {

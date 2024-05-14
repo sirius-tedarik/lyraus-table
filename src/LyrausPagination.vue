@@ -86,7 +86,6 @@ import BorderButton from "./BorderButton.vue";
 export default {
   name: "lyraus-pagination",
   props: [
-    "currentPage",
     "pageCount",
     "totalRowCount",
     "buttonColor",
@@ -94,7 +93,6 @@ export default {
     "textColor",
   ],
   model: {
-    prop: "currentPage",
     event: "changePage",
   },
   components: {
@@ -102,22 +100,22 @@ export default {
   },
   data() {
     return {
-      current: 0,
+      currentPage: 0,
       visiblePages: [],
     };
   },
   methods: {
     changePage(page) {
-      this.$emit("changePage", page);
+      this.currentPage = page;
     },
     goBack() {
       if (this.currentPage > 1) {
-        this.$emit("changePage", this.currentPage - 1);
+        this.currentPage = this.currentPage - 1;
       }
     },
     goNext() {
       if (this.currentPage < this.pageCount) {
-        this.$emit("changePage", this.currentPage + 1);
+        this.currentPage = this.currentPage + 1;
       }
     },
     handlePageButtons() {
@@ -125,7 +123,7 @@ export default {
       const pagesToShow = 6;
       const halfPagesToShow = Math.floor(pagesToShow / 2);
 
-      let startPage = Math.max(1, this.current - halfPagesToShow);
+      let startPage = Math.max(1, this.currentPage - halfPagesToShow);
       let endPage = Math.min(totalPageCount, startPage + pagesToShow - 1);
       startPage = Math.max(1, endPage - pagesToShow + 1);
 
@@ -139,13 +137,8 @@ export default {
     },
   },
   watch: {
-    current(val) {
-      if (val != this.currentPage) {
-        this.$emit("changePage", val);
-      }
-    },
     currentPage(val) {
-      this.current = val;
+      this.$emit("change-page", val);
       this.handlePageButtons();
     },
   },
