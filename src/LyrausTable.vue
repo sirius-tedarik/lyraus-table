@@ -303,9 +303,6 @@ export default {
     pageCount: {
       type: Number,
     },
-    currentPage: {
-      type: Number,
-    },
     isLoading: {
       type: Boolean,
       default: false,
@@ -429,6 +426,7 @@ export default {
         "dropdownColumn",
         "buttonsColumn",
       ],
+      currentPage: 0,
     };
   },
   methods: {
@@ -543,6 +541,9 @@ export default {
     }
   },
   watch: {
+    currentPage(val) {
+      this.$emit("update-current-page", val);
+    },
     selectedList(val) {
       this.$emit("update-selected", val);
     },
