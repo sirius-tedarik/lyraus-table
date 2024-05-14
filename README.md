@@ -197,8 +197,6 @@ Slot for custom sort buttons in table headers.
 <LyrausTable
     :data="List"
     :columns="columns"
-    :buttonsColumn="{ label: 'İşlem', width: 90 }"
-    :dropdownColumn="{ label: 'Durum', width: 180 }"
 >
     <template v-slot:sortButton="{ columnKey }">
         <button
@@ -227,8 +225,6 @@ Slot for custom filter buttons in table headers.
 <LyrausTable
     :data="List"
     :columns="columns"
-    :buttonsColumn="{ label: 'İşlem', width: 90 }"
-    :dropdownColumn="{ label: 'Durum', width: 180 }"
 >
     <template v-slot:filterButton="{ columnKey }">
         <TableStatusPanel
@@ -252,11 +248,14 @@ If you want this to stick right side of the screen add :stickyRight=['dropdownCo
 <LyrausTable
     :data="List"
     :columns="columns"
-    :buttonsColumn="{ label: 'İşlem', width: 90 }"
-    :dropdownColumn="{ label: 'Durum', width: 180 }"
+    :dropdownColumn="[
+      { key: 'Durum', label: 'Durum', width: 180 },
+    ]"
 >
-    <template v-slot:colDropdown="{ item }">
-        <div class="table-td w-36 border-r border-opacity-20">
+    <template v-slot:colDropdown="{ item, dropdownKey }">
+        <div
+         v-if="dropdownKey === 'dropdownColumnDurum'"
+         class="table-td w-36 border-r border-opacity-20">
             <ChangeStatus
                 :plaque="item.vehicle"
                 :defaultTitle="item.stateName"

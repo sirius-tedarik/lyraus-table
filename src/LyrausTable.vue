@@ -164,10 +164,16 @@
 
                 <!-- DROPDOWN COLUMN -->
                 <div
-                  v-else-if="column.key === 'dropdownColumn' && dropdownColumn"
+                  v-else-if="
+                    column.key.includes('dropdownColumn') && dropdownColumn
+                  "
                   class="flex items-center px-3 my-2 border-r"
                 >
-                  <slot name="colDropdown" :item="row"></slot>
+                  <slot
+                    name="colDropdown"
+                    :item="row"
+                    :dropdownKey="column.key"
+                  ></slot>
                 </div>
                 <!-- DROPDOWN COLUMN -->
 
@@ -540,11 +546,17 @@ export default {
       this.columnsList = [selectableColumn, ...this.columnsList];
     }
     if (this.dropdownColumn) {
-      const dropdownColumn = {
-        key: "dropdownColumn",
-        ...this.dropdownColumn,
-      };
-      this.columnsList = [...this.columnsList, dropdownColumn];
+      this.dropdownColumn.forEach((item) => {
+        const dropdownColumn = {
+          ...item,
+          key: `dropdownColumn${item.key}`,
+        };
+        this.noneDataColumnKeys = [
+          ...this.noneDataColumnKeys,
+          `dropdownColumn${item.key}`,
+        ];
+        this.columnsList = [...this.columnsList, dropdownColumn];
+      });
     }
     if (this.buttonsColumn) {
       const buttonsColumn = {
