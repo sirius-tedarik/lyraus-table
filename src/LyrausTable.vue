@@ -287,7 +287,6 @@
       </div>
     </div>
     <LyrausPagination
-      v-if="totalCount > 0"
       :totalRowCount="totalCount"
       :pageCount="pageCount"
       @change-page="(r) => (currentPage = r - 1)"

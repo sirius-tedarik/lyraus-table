@@ -5,7 +5,10 @@
   >
     Toplam {{ totalRowCount }} adet kayıt listelendi
 
-    <div class="flex dark:bg-gray-800 text-sm xl:text-base mt-4 xl:mt-0">
+    <div
+      v-if="totalRowCount"
+      class="flex dark:bg-gray-800 text-sm xl:text-base mt-4 xl:mt-0"
+    >
       <BorderButton
         class="mr-2"
         :action="goBack"
@@ -100,23 +103,30 @@ export default {
   },
   data() {
     return {
-      currentPage: 0,
+      currentPage: 1,
       visiblePages: [],
     };
   },
   methods: {
     changePage(page) {
+      this.updatePage();
       this.currentPage = page;
     },
     goBack() {
       if (this.currentPage > 1) {
         this.currentPage = this.currentPage - 1;
+        this.updatePage();
       }
     },
     goNext() {
       if (this.currentPage < this.pageCount) {
         this.currentPage = this.currentPage + 1;
+        this.updatePage();
       }
+    },
+    updatePage() {
+      this.$emit("change-page", this.currentPage);
+      this.handlePageButtons();
     },
     handlePageButtons() {
       const totalPageCount = this.pageCount - 1;
@@ -137,8 +147,7 @@ export default {
     },
   },
   watch: {
-    currentPage(val) {
-      this.$emit("change-page", val);
+    pageCount() {
       this.handlePageButtons();
     },
   },
