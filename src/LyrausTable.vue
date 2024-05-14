@@ -151,8 +151,10 @@
                 >
                   <button @click="toggleDescription(rowIndex)">
                     <i
-                      :class="`flex transition-transform duration-500 ${
-                        activeDescriptionIndex ? 'rotate-[-180deg]' : ''
+                      :class="`flex transition transform duration-300 ${
+                        activeDescriptionIndex === rowIndex
+                          ? '-rotate-90'
+                          : 'rotate-0'
                       }`"
                       class="fas fa-chevron-down text-gray-500"
                     ></i>
@@ -433,6 +435,7 @@ export default {
       selectedBatchOp: "",
       noneDataColumnKeys: [
         "index",
+        "description",
         "selectableColumn",
         "dropdownColumn",
         "buttonsColumn",
