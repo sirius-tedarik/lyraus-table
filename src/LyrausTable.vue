@@ -140,7 +140,7 @@
                   v-if="column.key === 'index'"
                   class="flex items-center justify-center my-2 border-r"
                 >
-                  {{ rowIndex + 1 }}
+                  {{ calcRows.length * currentPage + rowIndex + 1 }}
                 </div>
                 <!-- INDEX COLUMN -->
 
@@ -181,6 +181,12 @@
                 >
                   <span>
                     {{ row[column.key] }}
+                    <span
+                      v-for="(extraKey, extraKeyIndex) in column.extraKeys"
+                      :key="extraKeyIndex"
+                    >
+                      {{ " " + row[extraKey] }}</span
+                    >
                   </span>
                   <slot
                     name="rowButtons"
