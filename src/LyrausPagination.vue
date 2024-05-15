@@ -89,6 +89,7 @@ import BorderButton from "./BorderButton.vue";
 export default {
   name: "lyraus-pagination",
   props: [
+    "parentPage",
     "pageCount",
     "totalRowCount",
     "buttonColor",
@@ -149,6 +150,9 @@ export default {
   watch: {
     pageCount() {
       this.handlePageButtons();
+    },
+    parentPage(val) {
+      this.currentPage = val + 1;
     },
   },
   created() {

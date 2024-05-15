@@ -288,6 +288,7 @@
     </div>
     <LyrausPagination
       :totalRowCount="totalCount"
+      :parentPage="currentPage"
       :pageCount="pageCount"
       @change-page="(r) => (currentPage = r - 1)"
       :buttonColor="paginationButtonColor"
@@ -318,6 +319,9 @@ export default {
       type: Number,
     },
     pageCount: {
+      type: Number,
+    },
+    pageProp: {
       type: Number,
     },
     isLoading: {
@@ -564,6 +568,9 @@ export default {
     }
   },
   watch: {
+    pageProp(val) {
+      this.currentPage = val;
+    },
     currentPage(val) {
       this.$emit("update-current-page", val);
     },
