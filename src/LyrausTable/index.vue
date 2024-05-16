@@ -51,7 +51,7 @@
                 :class="thClass"
               >
                 <div
-                  v-if="column.key === 'selectableColumn'"
+                  v-if="column.key === 'checkboxColumn'"
                   class="flex items-center justify-center px-4 border-r"
                 >
                   <input
@@ -78,7 +78,7 @@
                     {{ column.label }}
                   </p>
                   <div class="flex items-center pr-2 gap-1">
-                    <slot name="sortButton" :columnKey="column.key"> </slot>
+                    <slot name="sortButton" :columnKey="column.key"></slot>
                     <slot name="filterButton" :columnKey="column.key"></slot>
                   </div>
                 </div>
@@ -121,17 +121,12 @@
                 }"
               >
                 <!-- SELECTABLE COLUMN -->
-                <div
-                  v-if="column.key === 'selectableColumn'"
-                  class="flex items-center justify-center my-2 px-4 border-r"
-                >
-                  <div class="flex w-full items-center justify-center">
-                    <input
-                      type="checkbox"
-                      :checked="selectedList.includes(row.id)"
-                      @change="toggleSelection(row.id)"
-                    />
-                  </div>
+                <div v-if="column.key === 'checkboxColumn'">
+                  <CheckboxColumn
+                    :rowId="row.id"
+                    :selectedList="selectedList"
+                    @toggle-selection="toggleSelection"
+                  />
                 </div>
                 <!-- SELECTABLE COLUMN -->
 
@@ -145,20 +140,12 @@
                 <!-- INDEX COLUMN -->
 
                 <!-- DESCRIPTION COLUMN -->
-                <div
-                  v-else-if="column.key === 'description'"
-                  class="flex items-center justify-center my-2 border-r"
-                >
-                  <button @click="toggleDescription(rowIndex)">
-                    <i
-                      :class="`flex transition transform duration-300 ${
-                        activeDescriptionIndex === rowIndex
-                          ? '-rotate-90'
-                          : 'rotate-0'
-                      }`"
-                      class="fas fa-chevron-down text-gray-500"
-                    ></i>
-                  </button>
+                <div v-else-if="column.key === 'description'">
+                  <DescriptionColumn
+                    :rowIndex="rowIndex"
+                    :activeDescriptionIndex="activeDescriptionIndex"
+                    @toggle-description="toggleDescription"
+                  />
                 </div>
                 <!-- DESCRIPTION COLUMN -->
 
@@ -192,15 +179,11 @@
                   class="flex items-center px-3 my-2 justify-between"
                   :class="rowIndex + 1 === calcRows.length ? '' : 'border-r'"
                 >
-                  <span>
-                    {{ row[column.key] }}
-                    <span
-                      v-for="(extraKey, extraKeyIndex) in column.extraKeys"
-                      :key="extraKeyIndex"
-                    >
-                      {{ " " + row[extraKey] }}</span
-                    >
-                  </span>
+                  <ColumnContent
+                    v-if="!column.isDate || column.isDate"
+                    :row="row"
+                    :column="column"
+                  />
                   <slot
                     name="rowButtons"
                     :item="row"
@@ -219,51 +202,11 @@
                 :colspan="columnsList.length"
                 class="whitespace-nowrap"
               >
-                <div>
-                  <table
-                    class="divide-gray-200 border-r border-gray-300 sticky left-0"
-                  >
-                    <thead class="bg-gray-50">
-                      <tr>
-                        <th
-                          v-for="(column, colIndex) in innerTable"
-                          :key="colIndex"
-                          :style="{ minWidth: `${column.width}px` }"
-                          class="py-2 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200"
-                        >
-                          <div
-                            class="px-3"
-                            :class="
-                              colIndex + 1 === innerTable.length
-                                ? ''
-                                : 'border-r'
-                            "
-                          >
-                            {{ column.label }}
-                          </div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(row, rowIndex) in data" :key="rowIndex">
-                        <td
-                          v-if="
-                            row !== 'desc' &&
-                            rowIndex === activeDescriptionIndex
-                          "
-                          v-for="(column, colIndex) in innerTable"
-                          :style="{ minWidth: `${column.width}px` }"
-                          :key="colIndex"
-                          class="whitespace-nowrap text-xs px-3"
-                        >
-                          <span>
-                            {{ row[column.key] }}
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <InnerTable
+                  :innerTable="innerTable"
+                  :data="data"
+                  :activeDescriptionIndex="activeDescriptionIndex"
+                />
               </td>
               <!-- INNER TABLE -->
             </tr>
@@ -299,13 +242,29 @@
 </template>
 
 <script>
-import LyrausPagination from "./LyrausPagination.vue";
-import SearchInput from "./SearchInput.vue";
-import LyrausInput from "./LyrausInput.vue";
+import "moment/locale/tr";
+import moment from "moment";
+
+import LyrausPagination from "../LyrausPagination.vue";
+import SearchInput from "../SearchInput.vue";
+import LyrausInput from "../LyrausInput.vue";
+
+import CheckboxColumn from "./CheckboxColumn.vue";
+import DescriptionColumn from "./DescriptionColumn.vue";
+import ColumnContent from "./ColumnContent.vue";
+import InnerTable from "./InnerTable.vue";
 
 export default {
   name: "lyraus-table",
-  components: { LyrausPagination, SearchInput, LyrausInput },
+  components: {
+    LyrausPagination,
+    SearchInput,
+    LyrausInput,
+    CheckboxColumn,
+    DescriptionColumn,
+    ColumnContent,
+    InnerTable,
+  },
   props: {
     columns: {
       type: Array,
@@ -328,7 +287,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    selectableColumn: {
+    checkboxColumn: {
       type: Boolean,
       default: false,
     },
@@ -444,7 +403,7 @@ export default {
       noneDataColumnKeys: [
         "index",
         "description",
-        "selectableColumn",
+        "checkboxColumn",
         "buttonsColumn",
       ],
       currentPage: 0,
@@ -515,6 +474,12 @@ export default {
       return right + "px";
     },
   },
+  filters: {
+    getDate(val) {
+      if (val) return moment(val).format("LLL");
+      else return "Tarih Yok";
+    },
+  },
   computed: {
     calcRows() {
       if (this.activeDescriptionIndex !== null) {
@@ -540,11 +505,11 @@ export default {
     } else {
       this.columnsList = [...this.columnsList, ...this.columns];
     }
-    if (this.selectableColumn) {
-      const selectableColumn = {
-        key: "selectableColumn",
+    if (this.checkboxColumn) {
+      const checkboxColumn = {
+        key: "checkboxColumn",
       };
-      this.columnsList = [selectableColumn, ...this.columnsList];
+      this.columnsList = [checkboxColumn, ...this.columnsList];
     }
     if (this.dropdownColumns) {
       this.dropdownColumns.forEach((item) => {

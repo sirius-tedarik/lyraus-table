@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-import LyrausTable from "./LyrausTable.vue";
+import LyrausTable from "./LyrausTable";
 
 import "./assets/index.css";
 
