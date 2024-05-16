@@ -69,13 +69,14 @@ The LyrausTable component is a versatile table component designed for displaying
 
 ### Column Object
 
-| Props         | Description                                             |      Example |    Type | Default |
-| :------------ | :------------------------------------------------------ | -----------: | ------: | ------: |
-| **key**       | Identifier for using data.                              |    "orderNo" |  String |         |
-| **label**     | Column title (optional).                                | Order Number |  String |         |
-| **width**     | You have to give width to use sticky option (optional). |           80 |  Number |         |
-| **isDate**    | Changes the date format (optional).                     |         true | Boolean |   false |
-| **extraKeys** | Extra data to show in same column (optional).           | ["unitType"] |   Array |         |
+| Props         | Description                                                |      Example |    Type | Default |
+| :------------ | :--------------------------------------------------------- | -----------: | ------: | ------: |
+| **key**       | Identifier for using data.                                 |    "orderNo" |  String |         |
+| **label**     | Column title (optional).                                   | Order Number |  String |         |
+| **width**     | You have to give width to use sticky option (optional).    |           80 |  Number |         |
+| **isDate**    | Changes the date format (optional).                        |         true | Boolean |   false |
+| **maxLength** | Limit the displayed text to a specified length (optional). |           14 |  Number |         |
+| **extraKeys** | Extra data to show in same column (optional).              | ["unitType"] |   Array |         |
 
 ### Operations
 

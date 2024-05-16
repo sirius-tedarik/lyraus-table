@@ -1,6 +1,7 @@
 <template>
   <div v-if="!isDate">
-    <span>
+    <span v-if="maxLength"> {{ truncateText(content, maxLength) }}</span>
+    <span v-else>
       {{ content }}
     </span>
     <div v-for="(extraKey, extraKeyIndex) in extraKeys" :key="extraKeyIndex">
@@ -31,6 +32,11 @@ export default {
       required: true,
     },
   },
+  methods: {
+    truncateText(text, maxLength) {
+      return text.slice(0, maxLength) + "...";
+    },
+  },
   computed: {
     isDate() {
       return this.column.isDate;
@@ -40,6 +46,9 @@ export default {
     },
     extraKeys() {
       return this.column.extraKeys || [];
+    },
+    maxLength() {
+      return this.column.maxLength;
     },
   },
 };
