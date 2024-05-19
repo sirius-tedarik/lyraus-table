@@ -176,8 +176,7 @@
                 <!-- REGULAR COLUMN -->
                 <div
                   v-else
-                  class="flex items-center px-3 my-2 justify-between"
-                  :class="rowIndex + 1 === calcRows.length ? '' : 'border-r'"
+                  :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <ColumnContent
                     v-if="!column.isDate || column.isDate"
@@ -242,9 +241,6 @@
 </template>
 
 <script>
-import "moment/locale/tr";
-import moment from "moment";
-
 import LyrausPagination from "../LyrausPagination.vue";
 import SearchInput from "../SearchInput.vue";
 import LyrausInput from "../LyrausInput.vue";
@@ -472,12 +468,6 @@ export default {
       }
 
       return right + "px";
-    },
-  },
-  filters: {
-    getDate(val) {
-      if (val) return moment(val).format("LLL");
-      else return "Tarih Yok";
     },
   },
   computed: {

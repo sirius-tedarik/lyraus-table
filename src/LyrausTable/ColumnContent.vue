@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isDate">
+  <div v-if="!isDate" class="flex items-center px-3 my-2 justify-between">
     <span v-if="maxLength"> {{ truncateText(content, maxLength) }}</span>
     <span v-else>
       {{ content }}
@@ -10,7 +10,7 @@
       </span>
     </div>
   </div>
-  <div v-else>
+  <div v-else class="flex items-center px-3 my-2 justify-between">
     <span>
       {{ content | getDate }}
     </span>
@@ -21,6 +21,9 @@
 </template>
 
 <script>
+import "moment/locale/tr";
+import moment from "moment";
+
 export default {
   props: {
     row: {
@@ -35,6 +38,12 @@ export default {
   methods: {
     truncateText(text, maxLength) {
       return text.slice(0, maxLength) + "...";
+    },
+  },
+  filters: {
+    getDate(val) {
+      if (val) return moment(val).format("LLL");
+      else return "Tarih Yok";
     },
   },
   computed: {
