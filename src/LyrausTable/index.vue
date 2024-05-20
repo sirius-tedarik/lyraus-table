@@ -55,6 +55,7 @@
                   class="flex items-center justify-center px-4 border-r"
                 >
                   <input
+                    data-testid="checkbox-all-button"
                     v-if="useCheckAllBox"
                     type="checkbox"
                     @change="selectAll($event)"
@@ -327,7 +328,7 @@ export default Vue.extend({
       type: Function as PropType<() => void>,
     },
     batchOperationsList: {
-      type: Array as () => PropType<BatchOperationTypes>,
+      type: Array as () => PropType<BatchOperationTypes[]>,
       default: () => [],
     },
     stickyLeft: {

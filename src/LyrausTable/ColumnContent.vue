@@ -16,7 +16,7 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 
-import "moment/locale/tr";
+// import "moment/locale/tr";
 import moment from "moment";
 
 import { ExtendedColumnTypes } from "../Models";

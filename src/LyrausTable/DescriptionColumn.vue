@@ -12,17 +12,19 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropType } from "vue";
 
 export default Vue.extend({
+  name: "description-column",
   props: {
     rowIndex: {
       type: Number,
       required: true,
     },
     activeDescriptionIndex: {
-      type: Number,
+      type: null as undefined as PropType<Number | null>,
       required: true,
+      default: null,
     },
   },
   computed: {

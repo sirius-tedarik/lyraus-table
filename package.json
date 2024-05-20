@@ -2,12 +2,13 @@
   "name": "lyraus-ui",
   "version": "0.2.0b",
   "private": false,
-  "main": "./dist/lyraus-ui.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name lyraus-ui ./src/main.ts",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
+  "main": "./dist/lyraus-ui.common.js",
   "files": [
     "dist/*",
     "src/*",
@@ -18,29 +19,32 @@
   ],
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^2.6.11",
-    "validator": "^13.7.0",
     "moment": "^2.29.4",
+    "validator": "^13.7.0",
+    "vue": "^2.6.11",
     "vue-multiselect": "^2.1.6",
     "vue-numeric": "^2.5.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.2.17",
+    "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.19",
     "@vue/cli-plugin-eslint": "~4.5.19",
     "@vue/cli-plugin-typescript": "~4.5.19",
+    "@vue/cli-plugin-unit-jest": "~4.5.19",
     "@vue/cli-service": "~4.5.19",
     "@vue/eslint-config-typescript": "^7.0.0",
+    "@vue/test-utils": "^1.1.2",
+    "autoprefixer": "^9.8.8",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "typescript": "~4.1.5",
-    "vue-template-compiler": "^2.6.11",
-    "@tailwindcss/postcss7-compat": "^2.2.17",
-    "autoprefixer": "^9.8.8",
     "postcss": "^7.0.39",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
+    "typescript": "~4.1.5",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
@@ -55,7 +59,18 @@
     "parserOptions": {
       "parser": "@typescript-eslint/parser"
     },
-    "rules": {}
+    "rules": {},
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
   },
   "browserslist": [
     "> 1%",

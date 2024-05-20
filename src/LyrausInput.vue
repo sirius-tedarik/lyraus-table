@@ -207,11 +207,11 @@ import VueNumeric from "vue-numeric";
 import Multiselect from "vue-multiselect";
 import { isMobilePhone, isEmail } from "validator";
 export default {
+  name: "lyraus-input",
   components: {
     Multiselect,
     VueNumeric,
   },
-  name: "lyraus-input",
   model: {
     props: "value",
     event: "change",
@@ -318,6 +318,7 @@ export default {
     },
 
     selected(val) {
+      console.log("vall", val);
       if (!this.multiple && this.optList.length) this.$emit("change", val.id);
       else if (this.optList.length) this.$emit("change", val);
     },
