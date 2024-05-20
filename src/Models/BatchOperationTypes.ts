@@ -1,4 +1,4 @@
 export type BatchOperationTypes = {
-    id: sumber,
-    name: string,
-},
+  id: number;
+  name: string;
+};
