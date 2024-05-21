@@ -105,6 +105,12 @@ describe("LyrausTable.vue", () => {
   //   expect(vm.selectedList).toEqual([1, 2]);
   // });
 
+  it("updates selected batch operation when changed", async () => {
+    await wrapper.findComponent(LyrausInput).vm.$emit("change", "delete");
+    expect(wrapper.emitted("update-selected-batch-op")).toBeTruthy();
+    expect(wrapper.emitted("update-selected-batch-op")[0]).toEqual(["delete"]);
+  });
+
   it("toggles description when toggle-description event is emitted", async () => {
     const wrapper3 = factory({
       columns: [
@@ -127,12 +133,6 @@ describe("LyrausTable.vue", () => {
     await wrapper.findComponent(SearchInput).vm.$emit("change", "search term");
     expect(wrapper.emitted("update-search-value")).toBeTruthy();
     expect(wrapper.emitted("update-search-value")[0]).toEqual(["search term"]);
-  });
-
-  it("updates selected batch operation when changed", async () => {
-    await wrapper.findComponent(LyrausInput).vm.$emit("change", "delete");
-    expect(wrapper.emitted("update-selected-batch-op")).toBeTruthy();
-    expect(wrapper.emitted("update-selected-batch-op")[0]).toEqual(["delete"]);
   });
 
   it("emits update-current-page when page changes", async () => {
