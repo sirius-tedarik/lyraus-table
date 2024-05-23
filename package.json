@@ -1,6 +1,6 @@
 {
   "name": "lyraus-ui",
-  "version": "0.2.1b",
+  "version": "0.2.2b",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
