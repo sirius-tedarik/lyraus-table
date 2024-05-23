@@ -183,6 +183,7 @@
                     v-if="!column.isDate || column.isDate"
                     :row="row"
                     :column="column"
+                    :index="rowIndex"
                   />
                   <slot
                     name="rowButtons"

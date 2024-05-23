@@ -26,9 +26,12 @@
             v-for="(column, colIndex) in innerTable"
             :style="{ minWidth: `${column.width}px` }"
             :key="colIndex"
-            class="whitespace-nowrap text-xs px-3"
+            class="whitespace-nowrap text-xs"
           >
-            <ColumnContent :row="row" :column="column" />
+            <!-- px-3 -->
+            <div :class="colIndex + 1 === innerTable.length ? '' : 'border-r'">
+              <ColumnContent :row="row" :column="column" :index="rowIndex" />
+            </div>
           </td>
         </tr>
       </tbody>

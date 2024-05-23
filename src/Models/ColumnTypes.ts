@@ -1,16 +1,15 @@
 export type BuiltInColumnTypes = {
-  label: string;
+  label?: string;
   width?: number;
 };
 
-export type ColumnTypes = {
+export type ColumnTypes = BuiltInColumnTypes & {
   key: string;
-  label?: string;
-  width?: number;
 };
 
 export type ExtendedColumnTypes = ColumnTypes & {
   isDate?: boolean;
   maxLength?: number;
   extraKeys?: string[];
+  customRow?: (index: number) => string;
 };

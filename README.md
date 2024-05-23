@@ -9,15 +9,55 @@ npm install lyraus-ui
 ## Usage:
 
 ```
+<script>
 import { LyrausTable } from "lyraus-ui";
+</script>
 ```
 
 ```
-<LyrausTable
-    :data="List"
-    :columns="columns"
-/>
+<template>
+    ...
+    <LyrausTable
+        :data="List"
+        :columns="columns"
+    />
+    ...
+</template>
 ```
+
+## Custom Row:
+
+```
+<template>
+    ...
+    <LyrausTable
+        :data="List"
+        :columns="columns(List)"
+    />
+    ...
+</template>
+<script>
+import { LyrausTable } from "lyraus-ui";
+
+export default {
+  data() {
+    return {
+        columns: (data) => {
+            const columnArr = [
+                {
+                    key: "status",
+                    label: "Custom Data",
+                    width: 90,
+                    customRow: (index) =>
+                        data[index].status === 1 ? "Tek Yön" : "Gidiş Dönüş",
+                },
+            ];
+            return columnArr;
+            },
+        };
+    },
+};
+</script>
 
 ## Overview
 
@@ -85,6 +125,7 @@ The LyrausTable component is a versatile table component designed for displaying
 How to use default search bar.
 
 ```
+
 <template>
     <LyrausTable
         :data="List"
@@ -114,6 +155,7 @@ export default {
     }
 }
 </script>
+
 ```
 
 #### Batch Operations:
@@ -121,6 +163,7 @@ export default {
 How to use default batch operations.
 
 ```
+
 <template>
     <LyrausTable
         :data="List"
@@ -168,6 +211,7 @@ export default {
     }
 }
 </script>
+
 ```
 
 ### Slots
@@ -177,13 +221,17 @@ export default {
 Slot to change default search bar.
 
 ```
+
 <LyrausTable
-    :data="List"
-    :columns="columns"
+:data="List"
+:columns="columns"
+
 >
+
     <template v-slot:searchBar>
         < Add Your Custom Search Bar >
     </template>
+
 </LyrausTable>
 ```
 

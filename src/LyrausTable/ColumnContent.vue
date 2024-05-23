@@ -1,7 +1,8 @@
 <template>
-  <div class="flex items-center px-3 my-2 justify-between">
+  <div class="flex items-center px-3 my-2">
     <span v-if="maxLength"> {{ truncateText(content, maxLength) }}</span>
     <span v-else-if="isDate"> {{ getDate(content) }}</span>
+    <span v-else-if="column.customRow"> {{ column.customRow(index) }}</span>
     <span v-else>
       {{ content }}
     </span>
@@ -15,9 +16,9 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-
-// import "moment/locale/tr";
 import moment from "moment";
+
+import "moment/locale/tr";
 
 import { ExtendedColumnTypes } from "../Models";
 
@@ -30,6 +31,9 @@ export default Vue.extend({
     column: {
       type: Object as PropType<ExtendedColumnTypes>,
       required: true,
+    },
+    index: {
+      type: Number,
     },
   },
   methods: {
