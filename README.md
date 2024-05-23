@@ -1,5 +1,9 @@
 # LyrausTable Vue.js Component
 
+## Overview
+
+The LyrausTable component is a versatile table component designed for displaying tabular data in Vue.js applications. It provides various features such as pagination, sticky columns, sorting, filtering, and customizable column rendering.
+
 ## Installation
 
 ```
@@ -25,7 +29,7 @@ import { LyrausTable } from "lyraus-ui";
 </template>
 ```
 
-## Custom Row:
+### Custom Row:
 
 ```
 <template>
@@ -60,11 +64,17 @@ export default {
 </script>
 ```
 
-## Overview
+### Column Object
 
-The LyrausTable component is a versatile table component designed for displaying tabular data in Vue.js applications. It provides various features such as pagination, sticky columns, sorting, filtering, and customizable column rendering.
-
-## Usage
+| Props         | Description                                                |                                         Example |     Type | Default |
+| :------------ | :--------------------------------------------------------- | ----------------------------------------------: | -------: | ------: |
+| **key**       | Identifier for using data.                                 |                                       "orderNo" |   String |         |
+| **label**     | Column title (optional).                                   |                                    Order Number |   String |         |
+| **width**     | You have to give width to use sticky option (optional).    |                                              80 |   Number |         |
+| **isDate**    | Changes the date format (optional).                        |                                            true |  Boolean |   false |
+| **maxLength** | Limit the displayed text to a specified length (optional). |                                              14 |   Number |         |
+| **extraKeys** | Extra data to show in same column (optional).              |                                    ["unitType"] |    Array |         |
+| **customRow** | Function to add custom row (optional).                     | (index) => data[index].status === 1 ? "A" : "B" | Function |         |
 
 ### Table Props
 
@@ -107,17 +117,6 @@ The LyrausTable component is a versatile table component designed for displaying
 | **tbodyClass**                | Tailwind class for table body (optional).                                                                                      |                                                                               text-white |   string |                                                                                 text-black |
 | **outerDivClass**             | Tailwind class for the outer div wrapping the table(optional).                                                                 |                                                                                          |   string |                                                                          overflow-auto m-2 |
 | **innerDivClass**             | Tailwind class for the inner div wrapping the table (optional).                                                                |                                                                                          |   string |                                                                                            |
-
-### Column Object
-
-| Props         | Description                                                |      Example |    Type | Default |
-| :------------ | :--------------------------------------------------------- | -----------: | ------: | ------: |
-| **key**       | Identifier for using data.                                 |    "orderNo" |  String |         |
-| **label**     | Column title (optional).                                   | Order Number |  String |         |
-| **width**     | You have to give width to use sticky option (optional).    |           80 |  Number |         |
-| **isDate**    | Changes the date format (optional).                        |         true | Boolean |   false |
-| **maxLength** | Limit the displayed text to a specified length (optional). |           14 |  Number |         |
-| **extraKeys** | Extra data to show in same column (optional).              | ["unitType"] |   Array |         |
 
 ### Operations
 
