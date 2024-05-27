@@ -13,14 +13,19 @@
           />
         </slot>
       </div>
-      <div v-if="searchBar" class="w-1/4">
-        <slot name="searchBar">
-          <SearchInput
-            v-model="searchValue"
-            inputClass="w-full"
-            @searcing="handleSearch"
-          />
-        </slot>
+      <div class="w-1/4 flex items-center justify-between">
+        <div v-if="searchBar">
+          <slot name="searchBar">
+            <SearchInput
+              v-model="searchValue"
+              inputClass="w-full"
+              @searcing="handleSearch"
+            />
+          </slot>
+        </div>
+        <div v-if="rightExtraSlot">
+          <slot name="rightExtra"> </slot>
+        </div>
       </div>
     </div>
     <div
@@ -177,6 +182,7 @@
                 <!-- REGULAR COLUMN -->
                 <div
                   v-else
+                  class="flex items-center justify-between"
                   :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <ColumnContent
@@ -318,6 +324,10 @@ export default Vue.extend({
       default: false,
     },
     searchBar: {
+      type: Boolean,
+      default: false,
+    },
+    rightExtraSlot: {
       type: Boolean,
       default: false,
     },

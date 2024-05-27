@@ -90,6 +90,7 @@ export default {
 | **useCheckAllBox**            | Enables a checkbox in the selectable column to select all rows (optional).                                                     |                                                                                     true |  Boolean |                                                                                      false |
 | **indexColumn**               | Enables index column (optional).                                                                                               |                                                                                     true |  Boolean |                                                                                      false |
 | **searchBar**                 | Enables a search bar above the table (optional).                                                                               |                                                                                     true |  Boolean |                                                                                      false |
+| **rightExtraSlot**            | Enables an extra slot at top right side of the table(optional).                                                                |                                                                                     true |  Boolean |                                                                                      false |
 | **batchOperations**           | Enables batch operation controls (optional).                                                                                   |                                                                                     true |  Boolean |                                                                                      false |
 | **handleSearch**              | A function to handle search queries (optional).                                                                                |                                                                                          | Function |                                                                                            |
 | **batchOperationsList**       | A list of options for batch operations (optional).                                                                             |                                                                                          |    Array |                                                                                            |
@@ -225,11 +226,26 @@ Slot to change default search bar.
 <LyrausTable
 :data="List"
 :columns="columns"
-
 >
-
     <template v-slot:searchBar>
         < Add Your Custom Search Bar >
+    </template>
+
+</LyrausTable>
+```
+
+#### Extra Top Right Slot:
+
+Slot for custom component at top right side of the table.
+
+```
+
+<LyrausTable
+:data="List"
+:columns="columns"
+>
+    <template v-slot:rightExtra>
+        < Add Your Custom Component >
     </template>
 
 </LyrausTable>
@@ -243,6 +259,7 @@ Slot to change default batch operations.
 <LyrausTable
     :data="List"
     :columns="columns"
+    :batchOperations="true"
 >
     <template v-slot:batchOperations>
         < Add Your Custom Batch Operations Component >
@@ -355,7 +372,6 @@ If you want this to stick right side of the screen add :stickyRight=['buttonsCol
     :data="List"
     :columns="columns"
     :buttonsColumn="{ label: 'İşlem', width: 90 }"
-    :dropdownColumn="{ label: 'Durum', width: 180 }"
 >
     <template v-slot:colButtons="{ item, index }">
         <div class="flex items-center justify-end space-x-2 px-2">
@@ -388,8 +404,6 @@ Slot for custom buttons in each row.
 <LyrausTable
     :data="List"
     :columns="columns"
-    :buttonsColumn="{ label: 'İşlem', width: 90 }"
-    :dropdownColumn="{ label: 'Durum', width: 180 }"
 >
     <template v-slot:rowButtons="{ item, index, columnKey }">
         <button
