@@ -191,12 +191,14 @@
                     :column="column"
                     :index="rowIndex"
                   />
-                  <slot
-                    name="rowButtons"
-                    :item="row"
-                    :index="rowIndex"
-                    :columnKey="column.key"
-                  ></slot>
+                  <div class="mr-3">
+                    <slot
+                      name="rowButtons"
+                      :item="row"
+                      :index="rowIndex"
+                      :columnKey="column.key"
+                    ></slot>
+                  </div>
                 </div>
                 <!-- REGULAR COLUMN -->
               </td>

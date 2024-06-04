@@ -1,7 +1,9 @@
 <!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <div>
-    <table class="divide-gray-200 border-r border-gray-300 sticky left-0">
+    <table
+      class="divide-gray-200 border-r border-gray-300 sticky left-0 w-screen"
+    >
       <thead class="bg-gray-50">
         <tr>
           <th
