@@ -1,16 +1,14 @@
 <!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <div>
-    <table
-      class="divide-gray-200 border-r border-gray-300 sticky left-0 w-screen"
-    >
-      <thead class="bg-gray-50">
+    <table :class="innerTableClass">
+      <thead :innerTheadClass="innerTheadClass">
         <tr>
           <th
             v-for="(column, colIndex) in innerTable"
             :key="colIndex"
             :style="{ minWidth: `${column.width}px` }"
-            class="py-2 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200"
+            :innerThClass="innerThClass"
           >
             <div
               class="px-3"
@@ -21,14 +19,14 @@
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody :class="innerTbodyClass">
         <tr v-for="(row, rowIndex) in data" :key="rowIndex">
           <td
             v-if="row !== 'desc' && rowIndex === activeDescriptionIndex"
             v-for="(column, colIndex) in innerTable"
             :style="{ minWidth: `${column.width}px` }"
             :key="colIndex"
-            class="whitespace-nowrap text-xs"
+            :innerTdClass="innerTdClass"
           >
             <!-- px-3 -->
             <div :class="colIndex + 1 === innerTable.length ? '' : 'border-r'">
@@ -65,6 +63,11 @@ export default Vue.extend({
       type: Number,
       required: true,
     },
+    innerTableClass: { type: String },
+    innerTheadClass: { type: String },
+    innerThClass: { type: String },
+    innerTdClass: { type: String },
+    innerTbodyClass: { type: String },
   },
 });
 </script>

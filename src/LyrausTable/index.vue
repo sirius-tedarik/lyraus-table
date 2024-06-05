@@ -215,6 +215,11 @@
                   :innerTable="innerTable"
                   :data="data"
                   :activeDescriptionIndex="activeDescriptionIndex"
+                  :innerTableClass="innerTableClass"
+                  :innerTheadClass="innerTheadClass"
+                  :innerThClass="innerThClass"
+                  :innerTdClass="innerTdClass"
+                  :innerTbodyClass="innerTbodyClass"
                 />
               </td>
               <!-- INNER TABLE -->
@@ -408,6 +413,28 @@ export default Vue.extend({
     outerTableDivClass: {
       type: String,
       default: "overflow-auto",
+    },
+    innerTableClass: {
+      type: String,
+      default:
+        "divide-gray-200 border-r border-gray-300 sticky left-0 w-screen",
+    },
+    innerTheadClass: {
+      type: String,
+      default: "bg-gray-50",
+    },
+    innerThClass: {
+      type: String,
+      default:
+        "py-2 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200",
+    },
+    innerTdClass: {
+      type: String,
+      default: "whitespace-nowrap text-xs",
+    },
+    innerTbodyClass: {
+      type: String,
+      default: "",
     },
     innerTableDivClass: {
       type: String,
