@@ -14,7 +14,7 @@
         </slot>
       </div>
       <div class="w-1/4 flex items-center justify-between">
-        <div v-if="searchBar">
+        <div v-if="searchBar" class="w-full">
           <slot name="searchBar">
             <SearchInput
               v-model="searchValue"
@@ -416,24 +416,18 @@ export default Vue.extend({
     },
     innerTableClass: {
       type: String,
-      default: "divide-gray-200  border-gray-300 sticky left-0 w-screen",
     },
     innerTheadClass: {
       type: String,
-      default: "bg-gray-50",
     },
     innerThClass: {
       type: String,
-      default:
-        "py-2 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200",
     },
     innerTdClass: {
       type: String,
-      default: "whitespace-nowrap text-xs",
     },
     innerTbodyClass: {
       type: String,
-      default: "",
     },
     innerTableDivClass: {
       type: String,

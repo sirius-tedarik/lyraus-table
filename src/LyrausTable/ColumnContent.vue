@@ -7,9 +7,7 @@
       {{ content }}
     </span>
     <div v-for="(extraKey, extraKeyIndex) in extraKeys" :key="extraKeyIndex">
-      <span v-if="row[extraKey]">
-        {{ " " + row[extraKey] }}
-      </span>
+      <span v-if="row[extraKey]"> {{ " " }} {{ row[extraKey] }} </span>
     </div>
   </div>
 </template>

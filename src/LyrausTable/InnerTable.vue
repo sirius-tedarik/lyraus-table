@@ -60,11 +60,27 @@ export default Vue.extend({
       required: true,
     },
     activeDescriptionIndex: { type: Number },
-    innerTableClass: { type: String },
-    innerTheadClass: { type: String },
-    innerThClass: { type: String },
-    innerTdClass: { type: String },
-    innerTbodyClass: { type: String },
+    innerTableClass: {
+      type: String,
+      default: "divide-gray-200  border-gray-300 sticky left-0 w-screen",
+    },
+    innerTheadClass: {
+      type: String,
+      default: "bg-gray-50",
+    },
+    innerThClass: {
+      type: String,
+      default:
+        "py-2 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200",
+    },
+    innerTdClass: {
+      type: String,
+      default: "whitespace-nowrap text-xs",
+    },
+    innerTbodyClass: {
+      type: String,
+      default: "",
+    },
   },
 });
 </script>
