@@ -29,52 +29,17 @@ import { LyrausTable } from "lyraus-ui";
 </template>
 ```
 
-### Custom Row:
-
-```
-<template>
-    ...
-    <LyrausTable
-        :data="List"
-        :columns="columns(List)"
-    />
-    ...
-</template>
-<script>
-import { LyrausTable } from "lyraus-ui";
-
-export default {
-  data() {
-    return {
-        columns: (data) => {
-            const columnArr = [
-                {
-                    key: "status",
-                    label: "Custom Data",
-                    width: 90,
-                    customRow: (index) =>
-                        data[index].status === 1 ? "Tek Yön" : "Gidiş Dönüş",
-                },
-            ];
-            return columnArr;
-            },
-        };
-    },
-};
-</script>
-```
-
 ### Column Object
 
-| Props         | Description                                                |                                         Example |     Type | Default |
-| :------------ | :--------------------------------------------------------- | ----------------------------------------------: | -------: | ------: |
-| **key**       | Identifier for using data.                                 |                                       "orderNo" |   String |         |
-| **label**     | Column title (optional).                                   |                                    Order Number |   String |         |
-| **width**     | You have to give width to use sticky option (optional).    |                                              80 |   Number |         |
-| **isDate**    | Changes the date format (optional).                        |                                            true |  Boolean |   false |
-| **maxLength** | Limit the displayed text to a specified length (optional). |                                              14 |   Number |         |
-| **extraKeys** | Extra data to show in same column (optional).              |                                    ["unitType"] |    Array |         |
-| **customRow** | Function to add custom row (optional).                     | (index) => data[index].status === 1 ? "A" : "B" | Function |         |
+| Props          | Description                                                |      Example |    Type | Default |
+| :------------- | :--------------------------------------------------------- | -----------: | ------: | ------: |
+| **key**        | Identifier for using data.                                 |    "orderNo" |  String |         |
+| **label**      | Column title (optional).                                   | Order Number |  String |         |
+| **width**      | You have to give width to use sticky option (optional).    |           80 |  Number |         |
+| **isDate**     | Changes the date format (optional).                        |         true | Boolean |   false |
+| **fixedWidth** | To fixes the width of the column (optional).               |         true | Boolean |   false |
+| **maxLength**  | Limit the displayed text to a specified length (optional). |           14 |  Number |         |
+| **extraKeys**  | Extra data to show in same column (optional).              | ["unitType"] |   Array |         |
 
 ### Table Props
 

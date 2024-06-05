@@ -39,20 +39,7 @@
               <th
                 v-for="(column, index) in columnsList"
                 :key="index"
-                :style="{
-                  minWidth: `${column.width}px`,
-                  position:
-                    stickyLeft.includes(column.key) ||
-                    stickyRight.includes(column.key)
-                      ? 'sticky'
-                      : 'static',
-                  left: stickyLeft.includes(column.key)
-                    ? getStickyColumnLeft(index)
-                    : 'auto',
-                  right: stickyRight.includes(column.key)
-                    ? getStickyColumnRight(index)
-                    : 'auto',
-                }"
+                :style="getThStyle(column, index)"
                 :class="thClass"
               >
                 <div
@@ -416,18 +403,24 @@ export default Vue.extend({
     },
     innerTableClass: {
       type: String,
+      default: "divide-gray-200  border-gray-300 sticky left-0 w-full",
     },
     innerTheadClass: {
       type: String,
+      default: "bg-gray-50",
     },
     innerThClass: {
       type: String,
+      default:
+        "py-2 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200",
     },
     innerTdClass: {
       type: String,
+      default: "whitespace-nowrap text-xs py-2",
     },
     innerTbodyClass: {
       type: String,
+      default: "",
     },
     innerTableDivClass: {
       type: String,
@@ -533,6 +526,28 @@ export default Vue.extend({
       } else {
         return this.data;
       }
+    },
+    getThStyle() {
+      return (column: ExtendedColumnTypes, index: number) => {
+        const style: Record<string, string> = {
+          minWidth: `${column.width}px`,
+          position:
+            this.stickyLeft.includes(column.key) ||
+            this.stickyRight.includes(column.key)
+              ? "sticky"
+              : "static",
+          left: this.stickyLeft.includes(column.key)
+            ? this.getStickyColumnLeft(index)
+            : "auto",
+          right: this.stickyRight.includes(column.key)
+            ? this.getStickyColumnRight(index)
+            : "auto",
+        };
+        if (column.fixedWidth) {
+          style.maxWidth = `${column.width}px`;
+        }
+        return style;
+      };
     },
   },
   created() {

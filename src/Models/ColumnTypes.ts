@@ -11,5 +11,5 @@ export type ExtendedColumnTypes = ColumnTypes & {
   isDate?: boolean;
   maxLength?: number;
   extraKeys?: string[];
-  customRow?: (index: number) => string;
+  fixedWidth?: boolean;
 };
