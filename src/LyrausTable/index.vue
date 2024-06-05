@@ -160,7 +160,7 @@
                   v-else-if="
                     column.key.includes('dropdownColumn') && dropdownColumns
                   "
-                  class="flex items-center px-3 my-2 border-r"
+                  class="flex items-center justify-center px-3 my-2 border-r"
                 >
                   <slot
                     name="colDropdown"
@@ -416,8 +416,7 @@ export default Vue.extend({
     },
     innerTableClass: {
       type: String,
-      default:
-        "divide-gray-200 border-r border-gray-300 sticky left-0 w-screen",
+      default: "divide-gray-200  border-gray-300 sticky left-0 w-screen",
     },
     innerTheadClass: {
       type: String,

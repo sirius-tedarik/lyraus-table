@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center px-3 my-2">
+  <div class="flex items-center px-3">
     <span v-if="maxLength"> {{ truncateText(content, maxLength) }}</span>
     <span v-else-if="isDate"> {{ getDate(content) }}</span>
     <span v-else-if="hasCustomRow"> {{ customRowContent }}</span>

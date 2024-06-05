@@ -59,10 +59,7 @@ export default Vue.extend({
       type: Array,
       required: true,
     },
-    activeDescriptionIndex: {
-      type: Number,
-      required: true,
-    },
+    activeDescriptionIndex: { type: Number },
     innerTableClass: { type: String },
     innerTheadClass: { type: String },
     innerThClass: { type: String },
