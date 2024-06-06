@@ -405,11 +405,11 @@ export default Vue.extend({
     innerThClass: {
       type: String,
       default:
-        "py-2 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200",
+        "py-2 text-left text-xxs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200",
     },
     innerTdClass: {
       type: String,
-      default: "whitespace-nowrap text-xs py-2",
+      default: "whitespace-nowrap text-xxs py-2",
     },
     innerTbodyClass: {
       type: String,
