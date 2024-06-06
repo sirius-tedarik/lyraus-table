@@ -88,8 +88,8 @@
                 v-if="row !== 'desc'"
                 v-for="(column, colIndex) in columnsList"
                 @click="
-                  !noneDataColumnKeys.includes(column.key) &&
-                    selectRow(row, rowIndex)
+                  clickableColumns.includes(column.key) &&
+                    selectRow(row, column.key)
                 "
                 :key="colIndex"
                 :class="[
@@ -160,7 +160,7 @@
                   :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <ColumnContent
-                    v-if="!column.isDate || column.isDate"
+                    v-if="!column.dontDisplay"
                     :row="row"
                     :column="column"
                     :index="rowIndex"
@@ -255,7 +255,6 @@ type LyrausTableTypes = {
   searchValue: string;
   columnsList: ExtendedColumnTypes[] | [];
   selectedBatchOp: string;
-  noneDataColumnKeys: string[];
   currentPage: number;
 };
 
@@ -318,6 +317,10 @@ export default Vue.extend({
     },
     handleSearch: {
       type: Function as PropType<() => void>,
+    },
+    clickableColumns: {
+      type: Array as () => string[],
+      default: () => [],
     },
     batchOperationsList: {
       type: Array as () => PropType<BatchOperationTypes[]>,
@@ -430,12 +433,6 @@ export default Vue.extend({
       searchValue: "",
       columnsList: [],
       selectedBatchOp: "",
-      noneDataColumnKeys: [
-        "index",
-        "description",
-        "checkboxColumn",
-        "buttonsColumn",
-      ],
       currentPage: 0,
     };
   },
@@ -447,8 +444,8 @@ export default Vue.extend({
         this.selectedList = [];
       }
     },
-    selectRow(row: any, index: number): void {
-      this.$emit("row-click", row, index);
+    selectRow(row: any, key: string): void {
+      this.$emit("row-click", row, key);
     },
     toggleSelection(id: number) {
       const index = this.selectedList.indexOf(id);
@@ -531,9 +528,7 @@ export default Vue.extend({
             : "auto",
           maxWidth: `${column.width}px`,
         };
-        // if (column.fixedWidth) {
-        //   style.maxWidth = `${column.width}px`;
-        // }
+
         return style;
       };
     },
@@ -564,10 +559,6 @@ export default Vue.extend({
           ...item,
           key: `dropdownColumn${item.key}`,
         };
-        this.noneDataColumnKeys = [
-          ...this.noneDataColumnKeys,
-          `dropdownColumn${item.key}`,
-        ];
         this.columnsList = [...this.columnsList, dropdownColumn];
       });
     }
