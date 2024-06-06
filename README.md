@@ -2,7 +2,7 @@
 
 ## Overview
 
-The LyrausTable component is a versatile table component designed for displaying tabular data in Vue.js applications. It provides various features such as pagination, sticky columns, sorting, filtering, and customizable column rendering.
+> The LyrausTable component is a versatile table component designed for displaying tabular data in Vue.js applications. It provides various features such as pagination, sticky columns, sorting, filtering, and customizable column rendering.
 
 ## Installation
 
@@ -37,7 +37,7 @@ import { LyrausTable } from "lyraus-ui";
 | **label**      | Column title (optional).                                   | Order Number |  String |         |
 | **width**      | You have to give width to use sticky option (optional).    |           80 |  Number |         |
 | **isDate**     | Changes the date format (optional).                        |         true | Boolean |   false |
-| **fixedWidth** | To fixes the width of the column (optional).               |         true | Boolean |   false |
+| **fixedWidth** | Fixes the width of the column to given width(optional).    |         true | Boolean |   false |
 | **maxLength**  | Limit the displayed text to a specified length (optional). |           14 |  Number |         |
 | **extraKeys**  | Extra data to show in same column (optional).              | ["unitType"] |   Array |         |
 
@@ -77,7 +77,7 @@ import { LyrausTable } from "lyraus-ui";
 | **containerClass**            | Tailwind class for the most outer div (optional).                                                                              |                                                                                            |   string |                                                                                            |
 | **operationsDiv**             | Tailwind class for the div containing batch operations and search bar (optional).                                              |                                                     flex justify-between items-center mb-6 |   string |                                                     flex justify-between items-center mb-4 |
 | **tableClass**                | Tailwind class for the table element (optional).                                                                               |                                                         min-w-full divide-y divide-red-500 |   string |                                                        min-w-full divide-y divide-gray-200 |
-| **theadClass**                | Tailwind class for the table header element (optional).                                                                        |                                                               bg-red-500 sticky top-0 z-50 |   string |                                                               bg-gray-50 sticky top-0 z-50 |
+| **theadClass**                | Tailwind class for the table header element (optional).                                                                        |                                                               bg-red-500 sticky top-0 z-10 |   string |                                                               bg-gray-50 sticky top-0 z-10 |
 | **thClass**                   | Tailwind class for table header cells (optional).                                                                              | py-4 text-left text-xs font-medium bg-red-500 text-gray-500 tracking-wider border-gray-200 |   string | py-3 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200 |
 | **tdClass**                   | Tailwind class for table data cells (optional).                                                                                |                                                  whitespace-nowrap border-gray-200 text-md |   string |                                                  whitespace-nowrap border-gray-200 text-xs |
 | **tbodyClass**                | Tailwind class for table body (optional).                                                                                      |                                                                                 text-white |   string |                                                                                 text-black |

@@ -39,7 +39,7 @@
               <th
                 v-for="(column, index) in columnsList"
                 :key="index"
-                :style="getThStyle(column, index)"
+                :style="getStickyStyle(column, index)"
                 :class="thClass"
               >
                 <div
@@ -98,20 +98,7 @@
                     ? `bg-${alternateRowBg[0]}`
                     : `bg-${alternateRowBg[1]}`,
                 ]"
-                :style="{
-                  minWidth: `${column.width}px`,
-                  position:
-                    stickyLeft.includes(column.key) ||
-                    stickyRight.includes(column.key)
-                      ? 'sticky '
-                      : 'static',
-                  left: stickyLeft.includes(column.key)
-                    ? getStickyColumnLeft(colIndex)
-                    : 'auto',
-                  right: stickyRight.includes(column.key)
-                    ? getStickyColumnRight(colIndex)
-                    : 'auto',
-                }"
+                :style="getStickyStyle(column, colIndex)"
               >
                 <!-- SELECTABLE COLUMN -->
                 <div v-if="column.key === 'checkboxColumn'">
@@ -382,7 +369,7 @@ export default Vue.extend({
     },
     theadClass: {
       type: String,
-      default: "bg-gray-50 sticky top-0 z-50",
+      default: "bg-gray-50 sticky top-0 z-10",
     },
     thClass: {
       type: String,
@@ -527,14 +514,14 @@ export default Vue.extend({
         return this.data;
       }
     },
-    getThStyle() {
+    getStickyStyle() {
       return (column: ExtendedColumnTypes, index: number) => {
         const style: Record<string, string> = {
           minWidth: `${column.width}px`,
           position:
             this.stickyLeft.includes(column.key) ||
             this.stickyRight.includes(column.key)
-              ? "sticky"
+              ? "sticky "
               : "static",
           left: this.stickyLeft.includes(column.key)
             ? this.getStickyColumnLeft(index)
@@ -542,10 +529,11 @@ export default Vue.extend({
           right: this.stickyRight.includes(column.key)
             ? this.getStickyColumnRight(index)
             : "auto",
+          maxWidth: `${column.width}px`,
         };
-        if (column.fixedWidth) {
-          style.maxWidth = `${column.width}px`;
-        }
+        // if (column.fixedWidth) {
+        //   style.maxWidth = `${column.width}px`;
+        // }
         return style;
       };
     },
