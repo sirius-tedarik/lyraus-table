@@ -28,8 +28,10 @@
             :key="colIndex"
             :class="innerTdClass"
           >
-            <!-- px-3 -->
-            <div :class="colIndex + 1 === innerTable.length ? '' : 'border-r'">
+            <div
+              class="px-3"
+              :class="colIndex + 1 === innerTable.length ? '' : 'border-r'"
+            >
               <ColumnContent :row="row" :column="column" :index="rowIndex" />
             </div>
           </td>

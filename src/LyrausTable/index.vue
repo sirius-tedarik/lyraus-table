@@ -113,7 +113,8 @@
                 <!-- INDEX COLUMN -->
                 <div
                   v-if="column.key === 'index'"
-                  class="flex items-center justify-center my-2 border-r"
+                  class="flex items-center justify-center my-2"
+                  :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   {{ calcRows.length * currentPage + rowIndex + 1 }}
                 </div>
@@ -134,7 +135,8 @@
                   v-else-if="
                     column.key.includes('dropdownColumn') && dropdownColumns
                   "
-                  class="flex items-center justify-center px-3 my-2 border-r"
+                  class="flex items-center justify-center px-3 my-2"
+                  :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <slot
                     name="colDropdown"
@@ -147,7 +149,8 @@
                 <!-- BUTTONS COLUMN -->
                 <div
                   v-else-if="column.key === 'buttonsColumn' && buttonsColumn"
-                  class="flex items-center px-3 my-2 border-r"
+                  class="flex items-center px-3 my-2"
+                  :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <slot name="colButtons" :item="row" :index="rowIndex"></slot>
                 </div>
@@ -156,7 +159,7 @@
                 <!-- REGULAR COLUMN -->
                 <div
                   v-else
-                  class="flex items-center justify-between"
+                  class="flex items-center justify-between px-3"
                   :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <ColumnContent
@@ -165,7 +168,7 @@
                     :column="column"
                     :index="rowIndex"
                   />
-                  <div class="mr-3">
+                  <div :class="column.dontDisplay ? 'mx-auto' : ''">
                     <slot
                       name="rowButtons"
                       :item="row"
@@ -541,7 +544,7 @@ export default Vue.extend({
     if (this.innerTable.length > 0) {
       const innerTable = {
         key: "description",
-        width: 80,
+        width: 40,
       };
       this.columnsList = [...this.columnsList, innerTable, ...this.columns];
     } else {
