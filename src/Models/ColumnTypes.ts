@@ -12,4 +12,5 @@ export type ExtendedColumnTypes = ColumnTypes & {
   maxLength?: number;
   extraKeys?: string[];
   dontDisplay?: boolean;
+  center?: boolean;
 };

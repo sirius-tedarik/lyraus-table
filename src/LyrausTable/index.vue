@@ -91,6 +91,10 @@
                   clickableColumns.includes(column.key) &&
                     selectRow(row, column.key)
                 "
+                @dblclick="
+                  dblClickableColumns.includes(column.key) &&
+                    dblSelectRow(row, column.key)
+                "
                 :key="colIndex"
                 :class="[
                   tdClass,
@@ -168,7 +172,7 @@
                     :column="column"
                     :index="rowIndex"
                   />
-                  <div :class="column.dontDisplay ? 'mx-auto' : ''">
+                  <div :class="column.center ? 'mx-auto' : ''">
                     <slot
                       name="rowButtons"
                       :item="row"
@@ -325,6 +329,10 @@ export default Vue.extend({
       type: Array as () => string[],
       default: () => [],
     },
+    dblClickableColumns: {
+      type: Array as () => string[],
+      default: () => [],
+    },
     batchOperationsList: {
       type: Array as () => PropType<BatchOperationTypes[]>,
       default: () => [],
@@ -449,6 +457,9 @@ export default Vue.extend({
     },
     selectRow(row: any, key: string): void {
       this.$emit("row-click", row, key);
+    },
+    dblSelectRow(row: any, key: string): void {
+      this.$emit("dbl-row-click", row, key);
     },
     toggleSelection(id: number) {
       const index = this.selectedList.indexOf(id);
