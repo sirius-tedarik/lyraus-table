@@ -225,6 +225,7 @@
       </div>
     </div>
     <LyrausPagination
+      :enablePagination="enablePagination"
       :totalRowCount="totalCount"
       :parentPage="currentPage"
       :pageCount="pageCount"
@@ -307,6 +308,10 @@ export default Vue.extend({
       default: false,
     },
     useCheckAllBox: {
+      type: Boolean,
+      default: false,
+    },
+    enablePagination: {
       type: Boolean,
       default: false,
     },
