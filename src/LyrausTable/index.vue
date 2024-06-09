@@ -400,7 +400,7 @@ export default Vue.extend({
     },
     outerTableDivClass: {
       type: String,
-      default: "overflow-auto",
+      default: "overflow-hidden overflow-x-auto overflow-y-auto",
     },
     innerTableClass: {
       type: String,
@@ -603,12 +603,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped>
-.overflow-auto {
-  overflow: hidden;
-  overflow-x: auto;
-  overflow-y: auto;
-  max-height: 400px;
-}
-</style>
