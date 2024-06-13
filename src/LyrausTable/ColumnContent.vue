@@ -1,15 +1,12 @@
 <template>
-  <div class="flex items-center px-3">
-    <span v-if="maxLength"> {{ truncateText(content, maxLength) }}</span>
-    <span v-else-if="isDate"> {{ getDate(content) }}</span>
-    <span v-else-if="hasCustomRow"> {{ customRowContent }}</span>
+  <div class="flex items-center">
+    <span v-if="maxLength">{{ truncateText(content, maxLength) }}</span>
+    <span v-else-if="isDate">{{ getDate(content) }}</span>
     <span v-else>
       {{ content }}
     </span>
     <div v-for="(extraKey, extraKeyIndex) in extraKeys" :key="extraKeyIndex">
-      <span v-if="row[extraKey]">
-        {{ " " + row[extraKey] }}
-      </span>
+      <span v-if="row[extraKey]"> {{ " " }} {{ row[extraKey] }} </span>
     </div>
   </div>
 </template>
@@ -37,7 +34,9 @@ export default Vue.extend({
   },
   methods: {
     truncateText(text: string, maxLength: number) {
-      return text.slice(0, maxLength) + "...";
+      return text.length - 2 < maxLength
+        ? text
+        : text.slice(0, maxLength) + "...";
     },
     getDate(val: string) {
       if (val) return moment(val).format("LLL");
@@ -56,12 +55,6 @@ export default Vue.extend({
     },
     maxLength() {
       return this.column.maxLength;
-    },
-    hasCustomRow() {
-      return typeof this.column.customRow === "function";
-    },
-    customRowContent() {
-      return this.hasCustomRow ? this.column.customRow(this.index) : "";
     },
   },
 });

@@ -14,7 +14,7 @@
         </slot>
       </div>
       <div class="w-1/4 flex items-center justify-between">
-        <div v-if="searchBar">
+        <div v-if="searchBar" class="w-full">
           <slot name="searchBar">
             <SearchInput
               v-model="searchValue"
@@ -39,20 +39,7 @@
               <th
                 v-for="(column, index) in columnsList"
                 :key="index"
-                :style="{
-                  minWidth: `${column.width}px`,
-                  position:
-                    stickyLeft.includes(column.key) ||
-                    stickyRight.includes(column.key)
-                      ? 'sticky'
-                      : 'static',
-                  left: stickyLeft.includes(column.key)
-                    ? getStickyColumnLeft(index)
-                    : 'auto',
-                  right: stickyRight.includes(column.key)
-                    ? getStickyColumnRight(index)
-                    : 'auto',
-                }"
+                :style="getStickyStyle(column, index)"
                 :class="thClass"
               >
                 <div
@@ -101,8 +88,12 @@
                 v-if="row !== 'desc'"
                 v-for="(column, colIndex) in columnsList"
                 @click="
-                  !noneDataColumnKeys.includes(column.key) &&
-                    selectRow(row, rowIndex)
+                  clickableColumns.includes(column.key) &&
+                    selectRow(row, column.key)
+                "
+                @dblclick="
+                  dblClickableColumns.includes(column.key) &&
+                    dblSelectRow(row, column.key)
                 "
                 :key="colIndex"
                 :class="[
@@ -111,20 +102,7 @@
                     ? `bg-${alternateRowBg[0]}`
                     : `bg-${alternateRowBg[1]}`,
                 ]"
-                :style="{
-                  minWidth: `${column.width}px`,
-                  position:
-                    stickyLeft.includes(column.key) ||
-                    stickyRight.includes(column.key)
-                      ? 'sticky '
-                      : 'static',
-                  left: stickyLeft.includes(column.key)
-                    ? getStickyColumnLeft(colIndex)
-                    : 'auto',
-                  right: stickyRight.includes(column.key)
-                    ? getStickyColumnRight(colIndex)
-                    : 'auto',
-                }"
+                :style="getStickyStyle(column, colIndex)"
               >
                 <!-- SELECTABLE COLUMN -->
                 <div v-if="column.key === 'checkboxColumn'">
@@ -139,7 +117,8 @@
                 <!-- INDEX COLUMN -->
                 <div
                   v-if="column.key === 'index'"
-                  class="flex items-center justify-center my-2 border-r"
+                  class="flex items-center justify-center my-2"
+                  :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   {{ calcRows.length * currentPage + rowIndex + 1 }}
                 </div>
@@ -160,7 +139,8 @@
                   v-else-if="
                     column.key.includes('dropdownColumn') && dropdownColumns
                   "
-                  class="flex items-center justify-center px-3 my-2 border-r"
+                  class="flex items-center justify-center px-3 my-2"
+                  :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <slot
                     name="colDropdown"
@@ -173,7 +153,8 @@
                 <!-- BUTTONS COLUMN -->
                 <div
                   v-else-if="column.key === 'buttonsColumn' && buttonsColumn"
-                  class="flex items-center px-3 my-2 border-r"
+                  class="flex items-center px-3 my-2"
+                  :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <slot name="colButtons" :item="row" :index="rowIndex"></slot>
                 </div>
@@ -182,16 +163,16 @@
                 <!-- REGULAR COLUMN -->
                 <div
                   v-else
-                  class="flex items-center justify-between"
+                  class="flex items-center justify-between px-3"
                   :class="colIndex + 1 === columnsList.length ? '' : 'border-r'"
                 >
                   <ColumnContent
-                    v-if="!column.isDate || column.isDate"
+                    v-if="!column.dontDisplay"
                     :row="row"
                     :column="column"
                     :index="rowIndex"
                   />
-                  <div class="mr-3">
+                  <div :class="column.center ? 'mx-auto' : ''">
                     <slot
                       name="rowButtons"
                       :item="row"
@@ -244,6 +225,7 @@
       </div>
     </div>
     <LyrausPagination
+      :enablePagination="enablePagination"
       :totalRowCount="totalCount"
       :parentPage="currentPage"
       :pageCount="pageCount"
@@ -281,7 +263,6 @@ type LyrausTableTypes = {
   searchValue: string;
   columnsList: ExtendedColumnTypes[] | [];
   selectedBatchOp: string;
-  noneDataColumnKeys: string[];
   currentPage: number;
 };
 
@@ -330,6 +311,10 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    enablePagination: {
+      type: Boolean,
+      default: false,
+    },
     searchBar: {
       type: Boolean,
       default: false,
@@ -344,6 +329,14 @@ export default Vue.extend({
     },
     handleSearch: {
       type: Function as PropType<() => void>,
+    },
+    clickableColumns: {
+      type: Array as () => string[],
+      default: () => [],
+    },
+    dblClickableColumns: {
+      type: Array as () => string[],
+      default: () => [],
     },
     batchOperationsList: {
       type: Array as () => PropType<BatchOperationTypes[]>,
@@ -395,7 +388,7 @@ export default Vue.extend({
     },
     theadClass: {
       type: String,
-      default: "bg-gray-50 sticky top-0 z-50",
+      default: "bg-gray-50 sticky top-0 z-10",
     },
     thClass: {
       type: String,
@@ -412,11 +405,11 @@ export default Vue.extend({
     },
     outerTableDivClass: {
       type: String,
-      default: "overflow-auto",
+      default: "overflow-hidden overflow-x-auto overflow-y-auto",
     },
     innerTableClass: {
       type: String,
-      default: "divide-gray-200  border-gray-300 sticky left-0 w-screen",
+      default: "divide-gray-200  border-gray-300 sticky left-0 w-full",
     },
     innerTheadClass: {
       type: String,
@@ -425,11 +418,11 @@ export default Vue.extend({
     innerThClass: {
       type: String,
       default:
-        "py-2 text-left text-xs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200",
+        "py-2 text-left text-xxs font-medium bg-gray-50 text-gray-500 tracking-wider border-gray-200",
     },
     innerTdClass: {
       type: String,
-      default: "whitespace-nowrap text-xs",
+      default: "whitespace-nowrap text-xxs py-2",
     },
     innerTbodyClass: {
       type: String,
@@ -456,12 +449,6 @@ export default Vue.extend({
       searchValue: "",
       columnsList: [],
       selectedBatchOp: "",
-      noneDataColumnKeys: [
-        "index",
-        "description",
-        "checkboxColumn",
-        "buttonsColumn",
-      ],
       currentPage: 0,
     };
   },
@@ -473,8 +460,11 @@ export default Vue.extend({
         this.selectedList = [];
       }
     },
-    selectRow(row: any, index: number): void {
-      this.$emit("row-click", row, index);
+    selectRow(row: any, key: string): void {
+      this.$emit("row-click", row, key);
+    },
+    dblSelectRow(row: any, key: string): void {
+      this.$emit("dbl-row-click", row, key);
     },
     toggleSelection(id: number) {
       const index = this.selectedList.indexOf(id);
@@ -540,6 +530,27 @@ export default Vue.extend({
         return this.data;
       }
     },
+    getStickyStyle() {
+      return (column: ExtendedColumnTypes, index: number) => {
+        const style: Record<string, string> = {
+          minWidth: `${column.width}px`,
+          position:
+            this.stickyLeft.includes(column.key) ||
+            this.stickyRight.includes(column.key)
+              ? "sticky "
+              : "static",
+          left: this.stickyLeft.includes(column.key)
+            ? this.getStickyColumnLeft(index)
+            : "auto",
+          right: this.stickyRight.includes(column.key)
+            ? this.getStickyColumnRight(index)
+            : "auto",
+          maxWidth: `${column.width}px`,
+        };
+
+        return style;
+      };
+    },
   },
   created() {
     if (this.indexColumn) {
@@ -549,7 +560,7 @@ export default Vue.extend({
     if (this.innerTable.length > 0) {
       const innerTable = {
         key: "description",
-        width: 80,
+        width: 40,
       };
       this.columnsList = [...this.columnsList, innerTable, ...this.columns];
     } else {
@@ -567,10 +578,6 @@ export default Vue.extend({
           ...item,
           key: `dropdownColumn${item.key}`,
         };
-        this.noneDataColumnKeys = [
-          ...this.noneDataColumnKeys,
-          `dropdownColumn${item.key}`,
-        ];
         this.columnsList = [...this.columnsList, dropdownColumn];
       });
     }
@@ -601,12 +608,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped>
-.overflow-auto {
-  overflow: hidden;
-  overflow-x: auto;
-  overflow-y: auto;
-  max-height: 400px;
-}
-</style>

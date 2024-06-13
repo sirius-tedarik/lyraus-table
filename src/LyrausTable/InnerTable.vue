@@ -2,13 +2,13 @@
 <template>
   <div>
     <table :class="innerTableClass">
-      <thead :innerTheadClass="innerTheadClass">
+      <thead :class="innerTheadClass">
         <tr>
           <th
             v-for="(column, colIndex) in innerTable"
             :key="colIndex"
             :style="{ minWidth: `${column.width}px` }"
-            :innerThClass="innerThClass"
+            :class="innerThClass"
           >
             <div
               class="px-3"
@@ -26,10 +26,12 @@
             v-for="(column, colIndex) in innerTable"
             :style="{ minWidth: `${column.width}px` }"
             :key="colIndex"
-            :innerTdClass="innerTdClass"
+            :class="innerTdClass"
           >
-            <!-- px-3 -->
-            <div :class="colIndex + 1 === innerTable.length ? '' : 'border-r'">
+            <div
+              class="px-3"
+              :class="colIndex + 1 === innerTable.length ? '' : 'border-r'"
+            >
               <ColumnContent :row="row" :column="column" :index="rowIndex" />
             </div>
           </td>
@@ -60,11 +62,21 @@ export default Vue.extend({
       required: true,
     },
     activeDescriptionIndex: { type: Number },
-    innerTableClass: { type: String },
-    innerTheadClass: { type: String },
-    innerThClass: { type: String },
-    innerTdClass: { type: String },
-    innerTbodyClass: { type: String },
+    innerTableClass: {
+      type: String,
+    },
+    innerTheadClass: {
+      type: String,
+    },
+    innerThClass: {
+      type: String,
+    },
+    innerTdClass: {
+      type: String,
+    },
+    innerTbodyClass: {
+      type: String,
+    },
   },
 });
 </script>

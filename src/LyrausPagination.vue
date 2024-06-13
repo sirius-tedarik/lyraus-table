@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="pageCount > 1"
+    v-if="enablePagination && pageCount > 1"
     class="pt-5 xl:flex items-center justify-between border-white-custom md:px-6 xl:px-3 py-3 w-full text-black dark:text-gray-200 dark:bg-gray-800 text-sm xl:text-base"
   >
     Toplam {{ totalRowCount }} adet kayıt listelendi
@@ -103,6 +103,7 @@ export default Vue.extend({
     buttonColor: String,
     hoverColor: String,
     textColor: String,
+    enablePagination: Boolean,
   },
   model: {
     event: "changePage",
