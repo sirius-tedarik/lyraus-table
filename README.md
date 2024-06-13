@@ -15,13 +15,13 @@ npm install lyraus-ui
 
 ## Usage:
 
-```
+```html
 <script>
 import { LyrausTable } from "lyraus-ui";
 </script>
 ```
 
-```
+```html
 <template>
     ...
     <LyrausTable
