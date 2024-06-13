@@ -1,5 +1,8 @@
 # LyrausTable Vue.js Component
 
+[![npm version](https://img.shields.io/npm/v/lyraus-ui.svg)](https://www.npmjs.com/package/lyraus-ui)
+[![downloads](https://img.shields.io/npm/dm/lyraus-ui.svg)](https://www.npmjs.com/package/lyraus-ui)
+
 ## Overview
 
 > The LyrausTable component is a versatile table component designed for displaying tabular data in Vue.js applications. It provides various features such as pagination, sticky columns, sorting, filtering, and customizable column rendering.
