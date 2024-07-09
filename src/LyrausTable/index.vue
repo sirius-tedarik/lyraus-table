@@ -295,6 +295,9 @@ export default Vue.extend({
     pageProp: {
       type: Number,
     },
+    searchProp: {
+      type: String,
+    },
     isLoading: {
       type: Boolean,
       default: false,
@@ -592,6 +595,9 @@ export default Vue.extend({
   watch: {
     pageProp(val) {
       this.currentPage = val;
+    },
+    searchProp(val) {
+      this.searchValue = val;
     },
     currentPage(val): void {
       this.$emit("update-current-page", val);
