@@ -80,7 +80,7 @@
           </thead>
           <tbody :class="tbodyClass">
             <tr
-              v-if="!isLoading"
+              v-if="!isLoading && data.length"
               v-for="(row, rowIndex) in calcRows"
               :key="rowIndex"
             >
@@ -206,18 +206,20 @@
               <!-- INNER TABLE -->
             </tr>
             <!-- LOADING INDICATOR-->
-            <tr
-              class="text-gray-200 text-center"
-              style="background-color: #3a3a3a"
-            >
+            <tr class="text-center">
               <td v-if="isLoading" :colspan="columnsList.length" class="p-4">
                 <i class="fas fa-spinner fa-spin"></i>
               </td>
               <td
-                v-if="!isLoading && data.length === 0"
+                v-if="!isLoading && !data.length"
                 :colspan="columnsList.length"
                 class="p-4"
-              ></td>
+              >
+                <span
+                  >Listelenebilecek herhangi bir kayıt bilgisi bulunamadı
+                  !</span
+                >
+              </td>
             </tr>
             <!-- LOADING INDICATOR-->
           </tbody>
