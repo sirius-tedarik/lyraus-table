@@ -215,10 +215,7 @@
                 :colspan="columnsList.length"
                 class="p-4"
               >
-                <span
-                  >Listelenebilecek herhangi bir kayıt bilgisi bulunamadı
-                  !</span
-                >
+                <span>Listelenebilecek herhangi bir veri bulunamadı !</span>
               </td>
             </tr>
             <!-- LOADING INDICATOR-->
